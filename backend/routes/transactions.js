@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
 
 // Create a transaction
 router.post('/', authMiddleware, async (req, res) => {
