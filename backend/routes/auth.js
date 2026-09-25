@@ -14,6 +14,16 @@ router.post('/register', async (req, res) => {
       'INSERT INTO "user" (username, email, password_hash) VALUES ($1, $2, $3) RETURNING user_id, username, email',
       [username, email, hashedPassword]
     );
+
+    const newUserId = result.rows[0].user_id;
+    const defaultCategories = [
+      ['Food', 'expense'], ['Transport', 'expense'], ['Bills', 'expense'],
+      ['Shopping', 'expense'], ['Entertainment', 'expense'], ['Salary', 'income']
+    ];
+    for (const [name, type] of defaultCategories) {
+      await pool.query('INSERT INTO category (user_id, category_name, type) VALUES ($1, $2, $3)', [newUserId, name, type]);
+    }
+
     res.status(201).json({ success: true, user: result.rows[0] });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

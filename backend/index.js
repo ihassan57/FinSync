@@ -37,6 +37,12 @@ app.use('/accounts', accountRoutes);
 const transactionRoutes = require('./routes/transactions');
 app.use('/transactions', transactionRoutes);
 
+const categoryRoutes = require('./routes/categories');
+app.use('/categories', categoryRoutes);
+
+const budgetRoutes = require('./routes/budgets');
+app.use('/budgets', budgetRoutes);
+
 app.listen(3000, () => {
   console.log('Server started on http://localhost:3000');
 });
